@@ -83,6 +83,8 @@ function generateCurrentCell() {
         }
 
         console.log("i checked correctness right now");
+        console.log("checkPosition: " + checkPosition());
+        console.log("checkSound: " + checkSound());
     }, 1900);
 }
 
@@ -131,5 +133,13 @@ function startGame() {
 
     console.log("game started");
 }
+
+document.addEventListener("keypress", function(event) {
+    if (event.key == 'A' || event.key == 'a') {
+        positionButtonClicked();
+    } else if (event.key == 'L' || event.key == 'l') {
+        soundButtonClicked();
+    }
+});
 
 startGame();
