@@ -1,5 +1,6 @@
 var rows = new Array()
 var columns = new Array()
+var lets = new Array();
 
 var iterationsCount;
 var needIterationsCount;
@@ -7,6 +8,7 @@ var needIterationsCount;
 var currentRow;
 var currentCol;
 var currentCell;
+var currentLetter;
 
 var intervalId;
 
@@ -21,7 +23,14 @@ var incorrectSoundAnswers;
 var positionButtonPressed;
 var soundButtonPressed;
 
-const letters = "ABCDRSFGHT";
+const letters = "ABCDEFG";
+
+function playLetterSound() {
+    var audio = new Audio();
+    audio.src = 'sounds/' + currentLetter + '.mp3';
+    console.log(audio.src);
+    audio.autoplay = true;
+}
 
 function generateCurrentCell() {
     iterationsCount++;
@@ -43,6 +52,12 @@ function generateCurrentCell() {
     var num = Math.round(Math.random() * 8);
     currentRow = Math.floor(num / 3) + 1;
     currentCol = num % 3 + 1;
+
+    var letterId = Math.round(Math.random() * (letters.length - 1));
+    currentLetter = letters[letterId];
+    lets.push(currentLetter);
+
+    playLetterSound();
 
     currentCell = document.getElementById("grid-cell-" + currentRow + "-" + currentCol);
     currentCell.style.backgroundColor = "blue";
@@ -79,7 +94,10 @@ function checkPosition() {
 }
 
 function checkSound() {
-    return true;
+    if (lets.length >= 3 && lets[lets.length - 3] == currentLetter) {
+        return true;
+    } 
+    return false;
 }
 
 function positionButtonClicked() {
