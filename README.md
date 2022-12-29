@@ -1,2 +1,2 @@
 # n-back-web-game
-java script web implementation of a popular game n-back
+java script implementation of a popular game n-back
