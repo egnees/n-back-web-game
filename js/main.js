@@ -1,25 +1,117 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+var rows = new Array()
+var columns = new Array()
 
-async function processGame() {
-    for (var i = 0; i < 5; ++i) {
-        console.log("round " + i);
-        var num = Math.round(Math.random() * 8);
-        var row = Math.floor(num / 3) + 1;
-        var col = num % 3 + 1;
+var iterationsCount;
+var needIterationsCount;
 
-        await sleep(1500);
+var currentRow;
+var currentCol;
+var currentCell;
 
-        var gridCell = document.getElementById("grid-cell-" + row + "-" + col);
-        gridCell.style.backgroundColor = "blue";
+var intervalId;
 
-        console.log(gridCell);
+var positionButton = document.getElementById("position-button");
+var soundButton = document.getElementById("sound-button");
 
-        await sleep(750);
+var correctPosAnswers;
+var incorrectPosAnswers;
+var correctSoundAnswers;
+var incorrectSoundAnswers;
 
-        gridCell.style.backgroundColor = "white";
+var positionButtonPressed;
+var soundButtonPressed;
+
+const letters = "ABCDRSFGHT";
+
+function generateCurrentCell() {
+    iterationsCount++;
+    console.log("round " + iterationsCount);
+
+    soundButtonPressed = false;
+    positionButtonPressed = false;
+
+    if (iterationsCount == needIterationsCount) {
+        clearInterval(intervalId);
+
+        console.log("correct answers: " + (correctPosAnswers + correctSoundAnswers));
+        console.log("incorrect answers: " + (incorrectPosAnswers + incorrectSoundAnswers));
     }
+
+    rows.push(currentRow);
+    columns.push(currentCol);
+
+    var num = Math.round(Math.random() * 8);
+    currentRow = Math.floor(num / 3) + 1;
+    currentCol = num % 3 + 1;
+
+    currentCell = document.getElementById("grid-cell-" + currentRow + "-" + currentCol);
+    currentCell.style.backgroundColor = "blue";
+    setTimeout(() => {
+        currentCell.style.backgroundColor = "white";
+    }, 750);
+
+    setTimeout(() => {
+        if (positionButtonPressed && checkPosition()) {
+            correctPosAnswers++;
+        } else if (positionButtonPressed && !checkPosition()) {
+            incorrectPosAnswers++;
+        } else if (!positionButtonPressed && checkPosition()) {
+            incorrectPosAnswers++;
+        }
+
+        if (soundButtonPressed && checkSound()) {
+            correctSoundAnswers++;
+        } else if (soundButtonPressed && !checkSound()) {
+            incorrectSoundAnswers++;
+        } else if (!soundButtonPressed && checkSound()) {
+            incorrectSoundAnswers++;
+        }
+
+        console.log("i checked correctness right now");
+    }, 1900);
 }
 
-processGame();
+function checkPosition() {
+    if (rows.length >= 3 && rows[rows.length - 3] == currentRow && columns[columns.length - 3] == currentCol) {
+        return true;
+    } 
+    return false;
+}
+
+function checkSound() {
+    return true;
+}
+
+function positionButtonClicked() {
+    positionButton.disabled = true;
+    positionButtonPressed = true;
+    setTimeout(() => {
+        console.log("making position button enabled");
+        positionButton.disabled = false;
+    }, 1000);
+}
+
+function soundButtonClicked() {
+    soundButton.disabled = true;
+    soundButtonPressed = true;
+    setTimeout(() => {
+        console.log("making sound button enabled");
+        soundButton.disabled = false;
+    }, 1000);
+}
+
+function startGame() {
+    iterationsCount = 0;
+    needIterationsCount = 10;
+    correctPosAnswers = 0;
+    incorrectPosAnswers = 0;
+    correctSoundAnswers = 0;
+    incorrectSoundAnswers = 0;
+    soundButtonPressed = false;
+    positionButtonPressed = false;
+    intervalId = setInterval(generateCurrentCell, 2000);
+
+    console.log("game started");
+}
+
+startGame();
