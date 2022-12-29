@@ -1,18 +1,25 @@
-var counter = 0;
-
-function button_clicked(button) {
-    counter++;
-    button.innerHTML = "Button pressed " + counter + " times";
-    button.style.width = 500;
-    button.style.height = 500;
-    button.style.background = "red";
-    button.style.color = "blue";
-    button.style.cssText = "border-radius: 5px; border: 0px; font-size: 30px";
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function onInput(input) {
-    console.log(input.value);
-    if (input.value == "hello") {
-        alert("hello you too!");
+async function processGame() {
+    for (var i = 0; i < 5; ++i) {
+        console.log("round " + i);
+        var num = Math.round(Math.random() * 8);
+        var row = Math.floor(num / 3) + 1;
+        var col = num % 3 + 1;
+
+        await sleep(1500);
+
+        var gridCell = document.getElementById("grid-cell-" + row + "-" + col);
+        gridCell.style.backgroundColor = "blue";
+
+        console.log(gridCell);
+
+        await sleep(750);
+
+        gridCell.style.backgroundColor = "white";
     }
 }
+
+processGame();
