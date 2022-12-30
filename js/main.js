@@ -1,3 +1,6 @@
+var startGameButton = document.getElementById("start-n-back-button");
+var doneP = document.getElementById("done-n-back");
+
 var rows = new Array()
 var cols = new Array()
 var lets = new Array();
@@ -45,16 +48,7 @@ function generateCurrentCell() {
     positionButton.disabled = false;
 
     if (iterationsCount == needIterationsCount) {
-        clearInterval(intervalId);
-
-        console.log("corr pos/corr sound: " + correctPosAnswers + "/" + correctSoundAnswers);
-        console.log("incorr pos/incorr sound: " + incorrectPosAnswers + "/" + incorrectSoundAnswers);
-
-        console.log("correct answers: " + (correctPosAnswers + correctSoundAnswers));
-        console.log("incorrect answers: " + (incorrectPosAnswers + incorrectSoundAnswers));
-
-        gameStarted = false;
-
+        stopGame();
         return;
     }
 
@@ -66,6 +60,8 @@ function generateCurrentCell() {
 
     currentCell = document.getElementById("grid-cell-" + currentRow + "-" + currentCol);
     currentCell.style.backgroundColor = "blue";
+
+    doneP.innerText = (iterationsCount + 1) + " of " + needIterationsCount;
 
     setTimeout(() => {
         currentCell.style.backgroundColor = "white";
@@ -126,10 +122,29 @@ function soundButtonClicked() {
     soundButtonPressed = true;
 }
 
+function stopGame() {
+    clearInterval(intervalId);
+
+    console.log("corr pos/corr sound: " + correctPosAnswers + "/" + correctSoundAnswers);
+    console.log("incorr pos/incorr sound: " + incorrectPosAnswers + "/" + incorrectSoundAnswers);
+
+    console.log("correct answers: " + (correctPosAnswers + correctSoundAnswers));
+    console.log("incorrect answers: " + (incorrectPosAnswers + incorrectSoundAnswers));
+
+    startGameButton.innerText = "Start";
+    doneP.innerText = "0 of " + needIterationsCount;
+
+    gameStarted = false;
+}
+
 function startGame() {
+    if (gameStarted) {
+        stopGame();
+        return;
+    }
     iterationsCount = 0;
-    needIterationsCount = 20;
-    needMatchCount = 5;
+    needIterationsCount = 30;
+    needMatchCount = 8;
     correctPosAnswers = 0;
     incorrectPosAnswers = 0;
     correctSoundAnswers = 0;
@@ -147,6 +162,8 @@ function startGame() {
     console.log("lets: " + lets);
 
     gameStarted = true;
+
+    startGameButton.innerText = "Stop";
 
     intervalId = setInterval(generateCurrentCell, 2000);
 
@@ -218,10 +235,8 @@ function generateLetters(total, match) {
 
 document.addEventListener("keypress", function(event) {
     if (event.key == 'A' || event.key == 'a') {
-        positionButtonClicked();
+        positionButton.click();
     } else if (event.key == 'L' || event.key == 'l') {
-        soundButtonClicked();
+        soundButton.click();
     }
 });
-
-startGame();

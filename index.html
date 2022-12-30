@@ -11,6 +11,11 @@
     <noscript>JavaScript is turned off. Make in on please.</noscript>
     <div id="main">
         <div id="n-back-game">
+            <div id="n-back-header">
+                <p id="done-n-back">0 of 30</p>
+                <button class="n-back-buttons" id="start-n-back-button" onclick="startGame()">Start</button>
+            </div>
+
             <div id="n-back-grid">
                 <div class="grid-row" id="grid-1-row">
                     <div class="grid-cell" id="grid-cell-1-1"></div>
@@ -30,11 +35,11 @@
             </div>
 
             <div id="n-back-buttons-div">
-                <button class="n-back-buttons" id="position-button" onclick="positionButtonClicked()" disabled>
+                <button class="n-back-buttons" id="position-button" onclick="positionButtonClicked()">
                     A: Position
                 </button>
 
-                <button class="n-back-buttons" id="sound-button" onclick="soundButtonClicked()" disabled>
+                <button class="n-back-buttons" id="sound-button" onclick="soundButtonClicked()">
                     L: Sound
                 </button>
             </div>

@@ -9,6 +9,7 @@
 }
 
 #n-back-grid {
+    margin-top: 2%;
     width: 100%;
     height: 90%;
     background-color: rgba(47, 187, 238, 0.15);
@@ -34,7 +35,7 @@
 #n-back-buttons-div {
     position: relative;
     width: 100%;
-    height: 10%;
+    height: 11.5%;
     margin-top: 2%;
     display: flex;
     justify-content: space-evenly;
@@ -43,7 +44,7 @@
 }
 
 .n-back-buttons {
-    margin: 1.5%;
+    margin: 2%;
     flex-basis: auto;
     flex-grow: 1;
     background-color: white;
@@ -62,6 +63,23 @@
 
 .n-back-buttons:active {
     color: gray;
+}
+
+#n-back-header {
+    position: relative;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(47, 187, 238, 0.15);
+    border-radius: 15px;
+}
+
+#done-n-back {
+    flex-basis: auto;
+    flex-grow: 1;
+    margin-left: 3%;
+    font-size: 18px;
 }
 
 #main {
