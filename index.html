@@ -50,6 +50,30 @@
                 <div class="results-div" id="total-results"></div>
             </div>
         </div>
+
+        <div id="n-back-settings">
+            <div class="config-div" id="N-argument">
+                N: 
+                <input type="number" value="3" class="n-back-number-input" id="n-back-arg-input">
+            </div>
+            <div class="config-div" id="amount-argument">
+                Piceces:
+                <input type="number" value="30" class="n-back-number-input" id="amount-arg-input">
+            </div>
+            <div class="config-div" id="memorize-time-argument">
+                Memorize time: 
+                <input type="number" value="1" class="n-back-number-input" id="memorize-time-arg-input">
+                seconds
+            </div>
+            <div class="config-div" id="show-time-argument">
+                Show time: 
+                <input type="number" value="1" class="n-back-number-input" id="show-time-arg-input">
+                seconds
+            </div>
+            <button class="n-back-buttons" id="save-settings-button" onclick="saveSettingsButtonPressed()">
+                Save
+            </button>
+        </div>
     </div>
         
     <script src="js/main.js"></script>

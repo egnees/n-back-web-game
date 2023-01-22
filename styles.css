@@ -123,3 +123,11 @@
     display: flex;
     justify-content: center;
 }
+
+#n-back-settings {
+    font-size: 18px;
+}
+
+.n-back-number-input {
+    width: 60px;
+}

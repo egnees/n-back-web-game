@@ -1,6 +1,11 @@
 var startGameButton = document.getElementById("start-n-back-button");
 var doneP = document.getElementById("done-n-back");
 
+var nBackArg = 3;
+
+var memorizeTime;
+var showTime;
+
 var rows = new Array()
 var cols = new Array()
 var lets = new Array();
@@ -23,6 +28,12 @@ var intervalId;
 
 var positionButton = document.getElementById("position-button");
 var soundButton = document.getElementById("sound-button");
+var saveSettingsButton = document.getElementById("save-settings-button");
+
+var nBackArgInput = document.getElementById("n-back-arg-input");
+var amountArgInput = document.getElementById("amount-arg-input");
+var memorizeTimeArgInput = document.getElementById("memorize-time-arg-input");
+var showTimeArgInput = document.getElementById("show-time-arg-input");
 
 var correctPosAnswers;
 var incorrectPosAnswers;
@@ -33,6 +44,24 @@ var positionButtonPressed;
 var soundButtonPressed;
 
 const letters = "ABCDEFG";
+
+function saveSettingsButtonPressed() {
+    if (gameStarted) {
+        stopGame();
+    }
+    updateSettings();
+}
+
+function updateSettings() {
+    nBackArg = parseInt(nBackArgInput.value);
+    needIterationsCount = parseInt(amountArgInput.value);
+    memorizeTime = parseFloat(memorizeTimeArgInput.value) * 1000;
+    showTime = parseFloat(showTimeArgInput.value) * 1000;
+
+    needMatchCount = Math.round(needIterationsCount / 5);
+
+    document.getElementById("done-n-back").innerText = "0 of " + needIterationsCount;
+}
 
 function playLetterSound() {
     var audio = new Audio();
@@ -68,7 +97,7 @@ function generateCurrentCell() {
 
     setTimeout(() => {
         currentCell.style.backgroundColor = "white";
-    }, 750);
+    }, showTime);
 
     setTimeout(() => {
         if (positionButtonPressed && checkPosition()) {
@@ -102,7 +131,7 @@ function generateCurrentCell() {
         console.log("checkSound: " + checkSound());
 
         iterationsCount++;
-    }, 1900);
+    }, showTime + memorizeTime - 100);
 }
 
 function checkPosition() {
@@ -227,9 +256,8 @@ function startGame() {
         stopGame();
         return;
     }
+    updateSettings();
     iterationsCount = 0;
-    needIterationsCount = 30;
-    needMatchCount = 8;
     correctPosAnswers = 0;
     incorrectPosAnswers = 0;
     correctSoundAnswers = 0;
@@ -255,7 +283,7 @@ function startGame() {
 
     document.getElementById("n-back-results").style.visibility = "hidden";
 
-    intervalId = setInterval(generateCurrentCell, 2000);
+    intervalId = setInterval(generateCurrentCell, showTime + memorizeTime);
 
     console.log("game started");
 }
